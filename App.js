@@ -1,6 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { MMKV, useMMKVBoolean } from "react-native-mmkv";
+
+export const storage = new MMKV();
 
 //custom button component
 const Button = ({ label, onPress }) => (
@@ -10,7 +13,8 @@ const Button = ({ label, onPress }) => (
 );
 
 export default function App() {
-  const [isDark, setIsDark] = useState(false);
+  // const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useMMKVBoolean("darkMode");
   return (
     <View style={isDark ? styles.containerDark : styles.container}>
       <Text
@@ -33,7 +37,7 @@ export default function App() {
           setIsDark(!isDark);
         }}
       />
-      <StatusBar style="auto" />
+      <StatusBar style={isDark ? "light" : "dark"} />
     </View>
   );
 }
