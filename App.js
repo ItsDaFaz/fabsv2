@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import * as DevMenu from "expo-dev-menu";
 
+//custom button component
 const Button = ({ label, onPress }) => (
   <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
     <Text style={styles.buttonText}>{label}</Text>
@@ -9,13 +10,27 @@ const Button = ({ label, onPress }) => (
 );
 
 export default function App() {
+  const [isDark, setIsDark] = useState(false);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Button
+    <View style={isDark ? styles.containerDark : styles.container}>
+      <Text
+        style={{
+          color: isDark ? "#fff" : "#000",
+        }}
+      >
+        Open up App.js to start working on your app!
+      </Text>
+      <Text>{isDark}.</Text>
+      {/* <Button
         label="Open Dev Menu"
         onPress={() => {
           DevMenu.openMenu();
+        }}
+      /> */}
+      <Button
+        label="Toggle Dark Theme"
+        onPress={() => {
+          setIsDark(!isDark);
         }}
       />
       <StatusBar style="auto" />
@@ -27,6 +42,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  containerDark: {
+    flex: 1,
+    backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
   },
